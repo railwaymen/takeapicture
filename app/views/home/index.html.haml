@@ -1,0 +1,21 @@
+.container.contentarea
+  %h1
+    WebRTC: photo capture demo
+  %p
+    Cheese
+  .camera
+    %video#video Video stream not available.
+    %button#start-button Take a picture
+    %button#clear-button Clear
+  %canvas#canvas
+
+  = form_with model: Picture.new, multipart: true, local: true do |f|
+    = f.text_field :title
+    = f.hidden_field :image
+    = f.submit 'Save'
+
+  .pictures
+    %h1 Pictures
+    - for picture in Picture.order(created_at: :desc)
+      %h3= picture.title
+      %p= image_tag picture.image
